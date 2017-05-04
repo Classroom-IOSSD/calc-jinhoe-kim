@@ -1,32 +1,40 @@
 #include <stdio.h>
 #include "operators.h"
-
 int main(){
 	FILE *fp = NULL;
 	int operand1, operand2;
 	char operator = ' ';
-	int result, line = 0;
+	float result, line = 0;
 
 	fp = fopen("read.txt","r");
 	if(fp!=NULL){
-		fscanf(fp, "%d", &line);
+		fscanf(fp, "%f", &line);
 	
 		for(int i=0; i<line; i++) {
 			fscanf(fp, "%d %c %d",&operand1, &operator, &operand2);
+			float(*fp)(float, float);
 			switch(operator) {
 				case '+':
-				result = add(operand1, operator);
+				
+				fp = add;
+				result = fp(operand1, operand2);
 				break;
 				case '-':
-				result = minus(operand1, operator);
+				
+				fp = minus;
+				result = fp(operand1, operand2);
 				break;
 				case '*':
-				result = mul(operand1, operator);
+				
+				fp = mul;
+				result = fp(operand1, operand2);
 				case '/':
-				result = div(operand1, operator);
+				
+				fp = div;
+				result = fp(operand1, operand2);
 				break;
 			}		
-			printf("%d %c %d = %d\n",
+			printf("%d %c %d = %f\n",
 				 operand1, operator, operand2, result);
 		}
 	}
